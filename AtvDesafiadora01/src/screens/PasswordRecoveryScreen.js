@@ -1,29 +1,50 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { users } from './authData';
 
 const PasswordRecoveryScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [recoveredPassword, setRecoveredPassword] = useState('');
 
   const handleRecover = () => {
-    const tempPassword = Math.random().toString(36).slice(-8);
-    setNewPassword(tempPassword);
+    const user = users.find(u => u.username === username);
+    setRecoveredPassword(user ? user.password : '');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recover Password</Text>
+      <Text style={styles.title}>Recupere sua senha aqui</Text>
+      
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Digite o Usuario"
         value={username}
         onChangeText={setUsername}
+        autoCapitalize="none"
       />
-      <Button title="Recover Password" onPress={handleRecover} />
-      {newPassword && (
-        <Text style={styles.password}>New Password: {newPassword}</Text>
+      
+      <Button 
+        title="Recuperar Senha" 
+        onPress={handleRecover} 
+      />
+      
+      {recoveredPassword ? (
+        <View style={styles.passwordContainer}>
+          <Text style={styles.passwordLabel}>Sua senha é:</Text>
+          <Text style={styles.passwordText}>{recoveredPassword}</Text>
+        </View>
+      ) : (
+        <Text style={styles.notFoundText}>
+          {username ? 'Username not found' : 'Entre com seu usuario para recuperar a senha'}
+        </Text>
       )}
-      <Button title="Back to Login" onPress={() => navigation.goBack()} />
+      
+      <Button 
+        title="Voltar a tela de Login" 
+        onPress={() => navigation.goBack()} 
+        color="#999"
+        style={styles.backButton}
+      />
     </View>
   );
 };
@@ -38,18 +59,42 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+    fontWeight: 'bold',
   },
   input: {
     width: '100%',
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 20,
     padding: 10,
+    borderRadius: 5,
   },
-  password: {
+  passwordContainer: {
     marginTop: 20,
+    padding: 15,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+  },
+  passwordLabel: {
     fontSize: 16,
+    color: '#333',
+    marginBottom: 5,
+  },
+  passwordText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2196F3',
+  },
+  notFoundText: {
+    marginTop: 20,
+    color: '#666',
+    fontStyle: 'italic',
+  },
+  backButton: {
+    marginTop: 30,
   },
 });
 

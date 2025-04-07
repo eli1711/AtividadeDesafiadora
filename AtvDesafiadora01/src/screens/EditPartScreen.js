@@ -23,7 +23,7 @@ const EditPartScreen = ({ route, navigation }) => {
         style={styles.input}
         placeholder="Nova Quantidade"
         keyboardType="numeric"
-        value={quantity}
+        value={quantid}
         onChangeText={setQuantity}
       />
       <Button

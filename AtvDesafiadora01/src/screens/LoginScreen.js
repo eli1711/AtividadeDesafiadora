@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { users } from './authData';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    if (username && password) {
+    const user = users.find(u => u.username === username && u.password === password);
+    
+    if (user) {
       navigation.navigate('Stock');
+    } else {
+      Alert.alert('Erro', 'Usuario ou Senha invalido');
     }
   };
 
@@ -16,20 +21,21 @@ const LoginScreen = ({ navigation }) => {
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
+        placeholder="Nome do Usuario"
         value={username}
         onChangeText={setUsername}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Senha"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
       <Button title="Login" onPress={handleLogin} />
       <TouchableOpacity onPress={() => navigation.navigate('PasswordRecovery')}>
-        <Text style={styles.link}>Forgot Password?</Text>
+        <Text style={styles.link}>Esqueceu a Senha?</Text>
       </TouchableOpacity>
     </View>
   );
