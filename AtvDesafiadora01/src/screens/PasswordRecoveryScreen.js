@@ -2,19 +2,28 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { users } from './authData';
 
+// Componente para recuperação de senha
 const PasswordRecoveryScreen = ({ navigation }) => {
+  // Estado para armazenar o nome do usuário digitado
   const [username, setUsername] = useState('');
+  // Estado para armazenar a senha recuperada (se existir)
   const [recoveredPassword, setRecoveredPassword] = useState('');
 
+  // Função que busca o usuário na lista e define a senha recuperada
   const handleRecover = () => {
+    // Procura o usuário que tenha o mesmo username digitado
     const user = users.find(u => u.username === username);
+    // Atualiza o estado com a senha do usuário, se encontrado; caso contrário, define string vazia
     setRecoveredPassword(user ? user.password : '');
   };
 
   return (
+    // Container principal com estilos aplicados
     <View style={styles.container}>
+      {/* Título da tela */}
       <Text style={styles.title}>Recupere sua senha aqui</Text>
       
+      {/* Input para digitar o nome do usuário */}
       <TextInput
         style={styles.input}
         placeholder="Digite o Usuario"
@@ -23,11 +32,13 @@ const PasswordRecoveryScreen = ({ navigation }) => {
         autoCapitalize="none"
       />
       
+      {/* Botão que aciona a função de recuperação de senha */}
       <Button 
         title="Recuperar Senha" 
         onPress={handleRecover} 
       />
       
+      {/* Condicional para exibir a senha recuperada ou mensagem caso o usuário não seja encontrado */}
       {recoveredPassword ? (
         <View style={styles.passwordContainer}>
           <Text style={styles.passwordLabel}>Sua senha é:</Text>
@@ -35,25 +46,27 @@ const PasswordRecoveryScreen = ({ navigation }) => {
         </View>
       ) : (
         <Text style={styles.notFoundText}>
-          {username ? 'Username not found' : 'Entre com seu usuario para recuperar a senha'}
+          {username ? 'Usuario esquecido não foi encontrado ' : 'Entre com seu usuario para recuperar a senha'}
         </Text>
       )}
       
+      {/* Botão para retornar à tela de Login */}
       <Button 
         title="Voltar a tela de Login" 
         onPress={() => navigation.goBack()} 
-        color="#999"
+        color="#ed1515"
         style={styles.backButton}
       />
     </View>
   );
 };
 
+// Definição dos estilos para o componente
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'center', // Centraliza verticalmente
+    alignItems: 'center',     // Centraliza horizontalmente
     padding: 20,
   },
   title: {
@@ -98,4 +111,8 @@ const styles = StyleSheet.create({
   },
 });
 
+// Exporta o componente para uso em outras partes da aplicação
 export default PasswordRecoveryScreen;
+
+
+//Guilherme Calandrim Fávero e Eli Hfni Mariano

@@ -1,4 +1,4 @@
-// authData.js
+// usuarios cadastrados do sistema maluco
 export const users = [
     {
       username: 'eli',
@@ -9,3 +9,6 @@ export const users = [
       password: '1234'
     }
   ];
+
+
+  //Guilherme Calandrim Fávero e Eli Hfni Mariano
